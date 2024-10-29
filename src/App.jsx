@@ -1,53 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import './lab01/CarProfile.css'
-import {data} from './lab01/module-data'
-import CarProfile from './lab01/CarProfile'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import RootLayout from './layouts/RootLayout.js';
+import HomePage from './pages/HomePage.jsx';
+import Lab1Page from './pages/Lab1Page.jsx';
+import Lab2Page from './pages/Lab2Page.jsx';
+import Lab3Page from './pages/Lab3Page.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
+
+const menuItems = [
+  { id: 1, label: "Home", url: "/", urlPattern: "/", element: <HomePage /> },
+  { id: 2, label: "Laboratorium 1", url: "/lab1", urlPattern: "/lab1", element: <Lab1Page /> },
+  { id: 3, label: "Laboratorium 2", url: "/lab2/:id", urlPattern: "/lab2/:id", element: <Lab2Page /> },
+  { id: 4, label: "Laboratorium 3", url: "/lab3", urlPattern: "/lab3/", element: <Lab3Page /> }
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-  
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      
-      
-
-    <div className="container">
-      {data.map(car => (
-        <CarProfile 
-          key={car.id} 
-          id={car.id} 
-          brand={car.brand} 
-          year={car.year} 
-          regNumber={car.regNumber} 
-        />
-      ))}
-    </div>
-
-    </>
-  )
+    <RootLayout items={menuItems}>
+      <Routes>
+        {menuItems.map(item => (
+          <Route key={item.id} path={item.urlPattern} element={item.element} />
+        ))}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </RootLayout>
+  );
 }
 
-export default App
+export default App;
