@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../data/AppContext';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useReducer } from 'react';
-import AppReducer from '../data/AppReducer'
 
 const FlexContainer = ({ element: Element, data }) => {
-    const [items, dispatch] = useReducer(AppReducer, data);
 
     return (
         <Container>

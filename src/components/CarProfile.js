@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../data/AppContext';
 import RatingBar from './RatingBar.js';
+import { useNavigate } from 'react-router-dom';
 
-const CarProfile = ({ id, brand, year, regNumber, rating, dispatch }) => {
+const CarProfile = ({ id, brand, year, regNumber, rating }) => {
+  const context = useContext(AppContext);
+  const dispatch = context.dispatch;
+  const navigate = useNavigate()
+
   const handleRateClick = () => {
     const newRating = rating === 10 ? 0 : rating + 1;
     dispatch({
@@ -17,12 +23,10 @@ const CarProfile = ({ id, brand, year, regNumber, rating, dispatch }) => {
     });
   };
 
-  const handleEditClick = () => {
-    dispatch({
-      type: 'edit',
-      payload: { id }
-    });
+  const handleEditClick = (id) => {
+    navigate(`/lab4/edit/${id}`)
   };
+
   return (
     <div className="card">
       <h3>Car ID: {id}</h3>
@@ -32,7 +36,7 @@ const CarProfile = ({ id, brand, year, regNumber, rating, dispatch }) => {
       <p>Rating: {rating}</p>
       <RatingBar rate={rating} />
       <div className="button-group">
-        <button onClick={handleEditClick} className="btn btn-primary">Edit</button>
+        <button onClick={() => handleEditClick(id)} className="btn btn-primary">Edit</button>
         <button onClick={handleDeleteClick} className="btn btn-danger">Delete</button>
         <button onClick={handleRateClick} className="btn btn-success">Rate</button>
       </div>

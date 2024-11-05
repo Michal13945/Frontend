@@ -1,10 +1,13 @@
-import React, { useReducer } from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../data/AppContext';
 import CarProfile from '../components/CarProfile';
 import { data } from '../data/module-data';
 import AppReducer from '../data/AppReducer';
 
 function Lab1Page() {
-  const [items, dispatch] = useReducer(AppReducer, data);
+  const context = useContext(AppContext);
+  const dispatch = context.dispatch;
+  const items = context.items;
 
   return (
     <div>
@@ -14,7 +17,7 @@ function Lab1Page() {
           id={car.id}
           brand={car.brand}
           year={car.year}
-          regNumber={car.regNumber}
+          regNumber={car.registrationNumber}
           rating={car.rating}
           dispatch={dispatch}
         />
